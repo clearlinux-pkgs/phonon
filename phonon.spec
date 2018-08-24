@@ -6,7 +6,7 @@
 #
 Name     : phonon
 Version  : 4.10.1
-Release  : 1
+Release  : 2
 URL      : https://download.kde.org/stable/phonon/4.10.1/phonon-4.10.1.tar.xz
 Source0  : https://download.kde.org/stable/phonon/4.10.1/phonon-4.10.1.tar.xz
 Source99 : https://download.kde.org/stable/phonon/4.10.1/phonon-4.10.1.tar.xz.sig
