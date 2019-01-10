@@ -5,23 +5,32 @@
 # Source0 file verified with key 0xB92A5F04EC949121 (sitter@kde.org)
 #
 Name     : phonon
-Version  : 4.10.1
-Release  : 2
-URL      : https://download.kde.org/stable/phonon/4.10.1/phonon-4.10.1.tar.xz
-Source0  : https://download.kde.org/stable/phonon/4.10.1/phonon-4.10.1.tar.xz
-Source99 : https://download.kde.org/stable/phonon/4.10.1/phonon-4.10.1.tar.xz.sig
+Version  : 4.10.2
+Release  : 3
+URL      : https://download.kde.org/stable/phonon/4.10.2/phonon-4.10.2.tar.xz
+Source0  : https://download.kde.org/stable/phonon/4.10.2/phonon-4.10.2.tar.xz
+Source99 : https://download.kde.org/stable/phonon/4.10.2/phonon-4.10.2.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause LGPL-2.1
-Requires: phonon-lib
-Requires: phonon-data
-Requires: phonon-license
+Requires: phonon-data = %{version}-%{release}
+Requires: phonon-lib = %{version}-%{release}
+Requires: phonon-license = %{version}-%{release}
 BuildRequires : buildreq-cmake
+BuildRequires : buildreq-kde
 BuildRequires : buildreq-qmake
 BuildRequires : extra-cmake-modules
+BuildRequires : extra-cmake-modules pkgconfig(glib-2.0)
+BuildRequires : extra-cmake-modules pkgconfig(libpulse)
+BuildRequires : glibc-dev
+BuildRequires : libX11-dev libICE-dev libSM-dev libXau-dev libXcomposite-dev libXcursor-dev libXdamage-dev libXdmcp-dev libXext-dev libXfixes-dev libXft-dev libXi-dev libXinerama-dev libXi-dev libXmu-dev libXpm-dev libXrandr-dev libXrender-dev libXres-dev libXScrnSaver-dev libXt-dev libXtst-dev libXv-dev libXxf86misc-dev libXxf86vm-dev
+BuildRequires : libjpeg-turbo-dev
 BuildRequires : mesa-dev
-BuildRequires : pkgconfig(Qt5Designer)
-BuildRequires : pulseaudio-dev
+BuildRequires : openssl-dev
+BuildRequires : pkg-config
+BuildRequires : pkgconfig(glib-2.0)
+BuildRequires : pkgconfig(libpulse)
+BuildRequires : pkgconfig(libpulse-mainloop-glib)
 BuildRequires : qtdeclarative-dev
 
 %description
@@ -38,9 +47,9 @@ data components for the phonon package.
 %package dev
 Summary: dev components for the phonon package.
 Group: Development
-Requires: phonon-lib
-Requires: phonon-data
-Provides: phonon-devel
+Requires: phonon-lib = %{version}-%{release}
+Requires: phonon-data = %{version}-%{release}
+Provides: phonon-devel = %{version}-%{release}
 
 %description dev
 dev components for the phonon package.
@@ -49,8 +58,8 @@ dev components for the phonon package.
 %package lib
 Summary: lib components for the phonon package.
 Group: Libraries
-Requires: phonon-data
-Requires: phonon-license
+Requires: phonon-data = %{version}-%{release}
+Requires: phonon-license = %{version}-%{release}
 
 %description lib
 lib components for the phonon package.
@@ -65,26 +74,26 @@ license components for the phonon package.
 
 
 %prep
-%setup -q -n phonon-4.10.1
+%setup -q -n phonon-4.10.2
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1531882784
-mkdir clr-build
+export SOURCE_DATE_EPOCH=1547140984
+mkdir -p clr-build
 pushd clr-build
 %cmake .. -DPHONON_BUILD_PHONON4QT5=on
-make  %{?_smp_mflags}
+make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1531882784
+export SOURCE_DATE_EPOCH=1547140984
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/phonon
-cp COPYING.LIB %{buildroot}/usr/share/doc/phonon/COPYING.LIB
-cp cmake/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/doc/phonon/cmake_COPYING-CMAKE-SCRIPTS
+mkdir -p %{buildroot}/usr/share/package-licenses/phonon
+cp COPYING.LIB %{buildroot}/usr/share/package-licenses/phonon/COPYING.LIB
+cp cmake/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/phonon/cmake_COPYING-CMAKE-SCRIPTS
 pushd clr-build
 %make_install
 popd
@@ -283,12 +292,12 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libphonon4qt5.so.4
-/usr/lib64/libphonon4qt5.so.4.10.1
+/usr/lib64/libphonon4qt5.so.4.10.2
 /usr/lib64/libphonon4qt5experimental.so.4
-/usr/lib64/libphonon4qt5experimental.so.4.10.1
+/usr/lib64/libphonon4qt5experimental.so.4.10.2
 /usr/lib64/qt5/plugins/designer/phononwidgets.so
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/phonon/COPYING.LIB
-/usr/share/doc/phonon/cmake_COPYING-CMAKE-SCRIPTS
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/phonon/COPYING.LIB
+/usr/share/package-licenses/phonon/cmake_COPYING-CMAKE-SCRIPTS
