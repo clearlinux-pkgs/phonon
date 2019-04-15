@@ -6,7 +6,7 @@
 #
 Name     : phonon
 Version  : 4.10.2
-Release  : 4
+Release  : 5
 URL      : https://download.kde.org/stable/phonon/4.10.2/phonon-4.10.2.tar.xz
 Source0  : https://download.kde.org/stable/phonon/4.10.2/phonon-4.10.2.tar.xz
 Source99 : https://download.kde.org/stable/phonon/4.10.2/phonon-4.10.2.tar.xz.sig
@@ -24,7 +24,6 @@ BuildRequires : extra-cmake-modules pkgconfig(glib-2.0)
 BuildRequires : extra-cmake-modules pkgconfig(libpulse)
 BuildRequires : glibc-dev
 BuildRequires : libX11-dev libICE-dev libSM-dev libXau-dev libXcomposite-dev libXcursor-dev libXdamage-dev libXdmcp-dev libXext-dev libXfixes-dev libXft-dev libXi-dev libXinerama-dev libXi-dev libXmu-dev libXpm-dev libXrandr-dev libXrender-dev libXres-dev libXScrnSaver-dev libXt-dev libXtst-dev libXv-dev libXxf86misc-dev libXxf86vm-dev
-BuildRequires : libjpeg-turbo-dev
 BuildRequires : mesa-dev
 BuildRequires : openssl-dev
 BuildRequires : pkg-config
@@ -50,6 +49,7 @@ Group: Development
 Requires: phonon-lib = %{version}-%{release}
 Requires: phonon-data = %{version}-%{release}
 Provides: phonon-devel = %{version}-%{release}
+Requires: phonon = %{version}-%{release}
 
 %description dev
 dev components for the phonon package.
@@ -81,15 +81,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1547140984
+export SOURCE_DATE_EPOCH=1555348719
 mkdir -p clr-build
 pushd clr-build
 %cmake .. -DPHONON_BUILD_PHONON4QT5=on
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1547140984
+export SOURCE_DATE_EPOCH=1555348719
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/phonon
 cp COPYING.LIB %{buildroot}/usr/share/package-licenses/phonon/COPYING.LIB
