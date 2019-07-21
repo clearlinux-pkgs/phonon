@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xB92A5F04EC949121 (sitter@kde.org)
 #
 Name     : phonon
-Version  : 4.10.2
-Release  : 6
-URL      : https://download.kde.org/stable/phonon/4.10.2/phonon-4.10.2.tar.xz
-Source0  : https://download.kde.org/stable/phonon/4.10.2/phonon-4.10.2.tar.xz
-Source99 : https://download.kde.org/stable/phonon/4.10.2/phonon-4.10.2.tar.xz.sig
+Version  : 4.10.3
+Release  : 7
+URL      : https://download.kde.org/stable/phonon/4.10.3/phonon-4.10.3.tar.xz
+Source0  : https://download.kde.org/stable/phonon/4.10.3/phonon-4.10.3.tar.xz
+Source99 : https://download.kde.org/stable/phonon/4.10.3/phonon-4.10.3.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause LGPL-2.1
@@ -50,6 +50,7 @@ Requires: phonon-lib = %{version}-%{release}
 Requires: phonon-data = %{version}-%{release}
 Provides: phonon-devel = %{version}-%{release}
 Requires: phonon = %{version}-%{release}
+Requires: phonon = %{version}-%{release}
 
 %description dev
 dev components for the phonon package.
@@ -74,16 +75,17 @@ license components for the phonon package.
 
 
 %prep
-%setup -q -n phonon-4.10.2
+%setup -q -n phonon-4.10.3
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1557044418
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1563733312
 mkdir -p clr-build
 pushd clr-build
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -92,11 +94,11 @@ export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %cmake .. -DPHONON_BUILD_PHONON4QT5=on
-make  %{?_smp_mflags}
+make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1557044418
+export SOURCE_DATE_EPOCH=1563733312
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/phonon
 cp COPYING.LIB %{buildroot}/usr/share/package-licenses/phonon/COPYING.LIB
@@ -111,6 +113,35 @@ popd
 %files data
 %defattr(-,root,root,-)
 /usr/share/dbus-1/interfaces/org.kde.Phonon4Qt5.AudioOutput.xml
+/usr/share/locale/ca/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ca@valencia/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/cs/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/de/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/en_GB/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/es/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/eu/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/fi/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/fr/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/gl/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/id/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/is/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/it/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ja/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ko/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/nb/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/nl/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/nn/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/pl/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/pt_BR/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/se/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/sk/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/sr/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/sr@ijekavian/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/sr@ijekavianlatin/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/sr@latin/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/sv/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/uk/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/zh_CN/LC_MESSAGES/libphonon_qt.qm
 /usr/share/phonon4qt5/buildsystem/COPYING-CMAKE-SCRIPTS
 /usr/share/phonon4qt5/buildsystem/FindPackageHandleStandardArgs.cmake
 /usr/share/phonon4qt5/buildsystem/FindPhononInternal.cmake
@@ -299,9 +330,9 @@ popd
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libphonon4qt5.so.4
-/usr/lib64/libphonon4qt5.so.4.10.2
+/usr/lib64/libphonon4qt5.so.4.10.3
 /usr/lib64/libphonon4qt5experimental.so.4
-/usr/lib64/libphonon4qt5experimental.so.4.10.2
+/usr/lib64/libphonon4qt5experimental.so.4.10.3
 /usr/lib64/qt5/plugins/designer/phononwidgets.so
 
 %files license
