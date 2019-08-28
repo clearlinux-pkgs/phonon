@@ -5,14 +5,15 @@
 # Source0 file verified with key 0xB92A5F04EC949121 (sitter@kde.org)
 #
 Name     : phonon
-Version  : 4.10.3
-Release  : 7
-URL      : https://download.kde.org/stable/phonon/4.10.3/phonon-4.10.3.tar.xz
-Source0  : https://download.kde.org/stable/phonon/4.10.3/phonon-4.10.3.tar.xz
-Source99 : https://download.kde.org/stable/phonon/4.10.3/phonon-4.10.3.tar.xz.sig
+Version  : 4.11.0
+Release  : 8
+URL      : https://download.kde.org/stable/phonon/4.11.0/phonon-4.11.0.tar.xz
+Source0  : https://download.kde.org/stable/phonon/4.11.0/phonon-4.11.0.tar.xz
+Source1 : https://download.kde.org/stable/phonon/4.11.0/phonon-4.11.0.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause LGPL-2.1
+Requires: phonon-bin = %{version}-%{release}
 Requires: phonon-data = %{version}-%{release}
 Requires: phonon-lib = %{version}-%{release}
 Requires: phonon-license = %{version}-%{release}
@@ -22,10 +23,7 @@ BuildRequires : buildreq-qmake
 BuildRequires : extra-cmake-modules
 BuildRequires : extra-cmake-modules pkgconfig(glib-2.0)
 BuildRequires : extra-cmake-modules pkgconfig(libpulse)
-BuildRequires : glibc-dev
-BuildRequires : libX11-dev libICE-dev libSM-dev libXau-dev libXcomposite-dev libXcursor-dev libXdamage-dev libXdmcp-dev libXext-dev libXfixes-dev libXft-dev libXi-dev libXinerama-dev libXi-dev libXmu-dev libXpm-dev libXrandr-dev libXrender-dev libXres-dev libXScrnSaver-dev libXt-dev libXtst-dev libXv-dev libXxf86misc-dev libXxf86vm-dev
 BuildRequires : mesa-dev
-BuildRequires : openssl-dev
 BuildRequires : pkg-config
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(libpulse)
@@ -34,6 +32,16 @@ BuildRequires : qtdeclarative-dev
 
 %description
 No detailed description available
+
+%package bin
+Summary: bin components for the phonon package.
+Group: Binaries
+Requires: phonon-data = %{version}-%{release}
+Requires: phonon-license = %{version}-%{release}
+
+%description bin
+bin components for the phonon package.
+
 
 %package data
 Summary: data components for the phonon package.
@@ -47,6 +55,7 @@ data components for the phonon package.
 Summary: dev components for the phonon package.
 Group: Development
 Requires: phonon-lib = %{version}-%{release}
+Requires: phonon-bin = %{version}-%{release}
 Requires: phonon-data = %{version}-%{release}
 Provides: phonon-devel = %{version}-%{release}
 Requires: phonon = %{version}-%{release}
@@ -75,16 +84,17 @@ license components for the phonon package.
 
 
 %prep
-%setup -q -n phonon-4.10.3
+%setup -q -n phonon-4.11.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1563733312
+export SOURCE_DATE_EPOCH=1567015014
 mkdir -p clr-build
 pushd clr-build
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -98,7 +108,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1563733312
+export SOURCE_DATE_EPOCH=1567015014
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/phonon
 cp COPYING.LIB %{buildroot}/usr/share/package-licenses/phonon/COPYING.LIB
@@ -110,50 +120,169 @@ popd
 %files
 %defattr(-,root,root,-)
 
+%files bin
+%defattr(-,root,root,-)
+/usr/bin/phononsettings
+
 %files data
 %defattr(-,root,root,-)
-/usr/share/dbus-1/interfaces/org.kde.Phonon4Qt5.AudioOutput.xml
+/usr/share/locale/ar/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ar/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/ast/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/be/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/be/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/be@latin/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/bg/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/bg/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/bn/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/bn_IN/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/bs/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/bs/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/ca/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ca/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/ca@valencia/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ca@valencia/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/cs/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/cs/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/csb/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/csb/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/da/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/da/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/de/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/de/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/el/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/el/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/en_GB/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/en_GB/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/eo/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/eo/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/es/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/es/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/et/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/et/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/eu/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/eu/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/fa/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/fa/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/fi/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/fi/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/fr/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/fr/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/fy/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/ga/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ga/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/gl/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/gl/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/gu/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/gu/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/he/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/he/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/hi/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/hi/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/hne/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/hne/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/hr/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/hr/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/hsb/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/hsb/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/hu/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/hu/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/ia/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/id/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/id/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/is/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/is/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/it/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/it/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/ja/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ja/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/kk/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/kk/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/km/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/km/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/kn/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/ko/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ko/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/ku/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ku/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/lt/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/lt/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/lv/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/lv/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/mai/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/mai/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/mk/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/mk/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/ml/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ml/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/mr/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/mr/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/ms/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/nb/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/nb/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/nds/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/nds/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/ne/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ne/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/nl/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/nl/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/nn/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/nn/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/oc/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/oc/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/or/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/pa/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/pa/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/pl/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/pl/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/pt/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/pt/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/pt_BR/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/pt_BR/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/ro/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ro/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/ru/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ru/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/se/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/se/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/si/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/sk/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/sk/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/sl/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/sl/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/sq/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/sq/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/sr/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/sr/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/sr@ijekavian/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/sr@ijekavian/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/sr@ijekavianlatin/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/sr@ijekavianlatin/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/sr@latin/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/sr@latin/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/sv/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/sv/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/ta/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ta/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/te/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/tg/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/th/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/th/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/tr/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/tr/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/ug/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/ug/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/uk/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/uk/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/vi/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/vi/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/wa/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/wa/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/locale/zh_CN/LC_MESSAGES/libphonon_qt.qm
-/usr/share/phonon4qt5/buildsystem/COPYING-CMAKE-SCRIPTS
-/usr/share/phonon4qt5/buildsystem/FindPackageHandleStandardArgs.cmake
+/usr/share/locale/zh_CN/LC_MESSAGES/phononsettings_qt.qm
+/usr/share/locale/zh_TW/LC_MESSAGES/libphonon_qt.qm
+/usr/share/locale/zh_TW/LC_MESSAGES/phononsettings_qt.qm
 /usr/share/phonon4qt5/buildsystem/FindPhononInternal.cmake
-/usr/share/phonon4qt5/buildsystem/MacroEnsureVersion.cmake
-/usr/share/phonon4qt5/buildsystem/MacroLogFeature.cmake
-/usr/share/phonon4qt5/buildsystem/MacroOptionalFindPackage.cmake
-/usr/share/phonon4qt5/buildsystem/MacroPushRequiredVars.cmake
-/usr/share/phonon4qt5/buildsystem/PhononMacros.cmake
-/usr/share/phonon4qt5/buildsystem/PhononQt4.cmake
-/usr/share/phonon4qt5/buildsystem/PhononQt5.cmake
-/usr/share/phonon4qt5/buildsystem/cmake_uninstall.cmake.in
-/usr/share/qt5/mkspecs/modules/qt_phonon4qt5.pri
 
 %files dev
 %defattr(-,root,root,-)
@@ -303,6 +432,7 @@ popd
 /usr/include/phonon4qt5/phonon/objectdescriptionmodel.h
 /usr/include/phonon4qt5/phonon/path.h
 /usr/include/phonon4qt5/phonon/phonon_export.h
+/usr/include/phonon4qt5/phonon/phonon_version.h
 /usr/include/phonon4qt5/phonon/phonondefs.h
 /usr/include/phonon4qt5/phonon/phononnamespace.h
 /usr/include/phonon4qt5/phonon/platformplugin.h
@@ -326,13 +456,14 @@ popd
 /usr/lib64/libphonon4qt5.so
 /usr/lib64/libphonon4qt5experimental.so
 /usr/lib64/pkgconfig/phonon4qt5.pc
+/usr/lib64/qt5/mkspecs/modules/qt_phonon4qt5.pri
 
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libphonon4qt5.so.4
-/usr/lib64/libphonon4qt5.so.4.10.3
+/usr/lib64/libphonon4qt5.so.4.11.0
 /usr/lib64/libphonon4qt5experimental.so.4
-/usr/lib64/libphonon4qt5experimental.so.4.10.3
+/usr/lib64/libphonon4qt5experimental.so.4.11.0
 /usr/lib64/qt5/plugins/designer/phononwidgets.so
 
 %files license
