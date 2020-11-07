@@ -6,10 +6,10 @@
 #
 Name     : phonon
 Version  : 4.11.1
-Release  : 9
+Release  : 10
 URL      : https://download.kde.org/stable/phonon/4.11.1/phonon-4.11.1.tar.xz
 Source0  : https://download.kde.org/stable/phonon/4.11.1/phonon-4.11.1.tar.xz
-Source1 : https://download.kde.org/stable/phonon/4.11.1/phonon-4.11.1.tar.xz.sig
+Source1  : https://download.kde.org/stable/phonon/4.11.1/phonon-4.11.1.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0 LGPL-2.1
@@ -23,12 +23,16 @@ BuildRequires : buildreq-qmake
 BuildRequires : extra-cmake-modules
 BuildRequires : extra-cmake-modules pkgconfig(glib-2.0)
 BuildRequires : extra-cmake-modules pkgconfig(libpulse)
+BuildRequires : extra-cmake-modules-data
 BuildRequires : mesa-dev
+BuildRequires : phonon-dev
 BuildRequires : pkg-config
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(libpulse)
 BuildRequires : pkgconfig(libpulse-mainloop-glib)
+BuildRequires : qtbase-dev
 BuildRequires : qtdeclarative-dev
+BuildRequires : qttools-dev
 
 %description
 No detailed description available
@@ -59,7 +63,6 @@ Requires: phonon-bin = %{version}-%{release}
 Requires: phonon-data = %{version}-%{release}
 Provides: phonon-devel = %{version}-%{release}
 Requires: phonon = %{version}-%{release}
-Requires: phonon = %{version}-%{release}
 
 %description dev
 dev components for the phonon package.
@@ -85,35 +88,35 @@ license components for the phonon package.
 
 %prep
 %setup -q -n phonon-4.11.1
+cd %{_builddir}/phonon-4.11.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1569612717
+export SOURCE_DATE_EPOCH=1604707326
 mkdir -p clr-build
 pushd clr-build
-# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %cmake .. -DPHONON_BUILD_PHONON4QT5=on
-make  %{?_smp_mflags}  VERBOSE=1
+make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1569612717
+export SOURCE_DATE_EPOCH=1604707326
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/phonon
-cp COPYING %{buildroot}/usr/share/package-licenses/phonon/COPYING
-cp COPYING.LIB %{buildroot}/usr/share/package-licenses/phonon/COPYING.LIB
-cp cmake/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/phonon/cmake_COPYING-CMAKE-SCRIPTS
+cp %{_builddir}/phonon-4.11.1/COPYING %{buildroot}/usr/share/package-licenses/phonon/7c203dee3a03037da436df03c4b25b659c073976
+cp %{_builddir}/phonon-4.11.1/COPYING.LIB %{buildroot}/usr/share/package-licenses/phonon/9a1929f4700d2407c70b507b3b2aaf6226a9543c
+cp %{_builddir}/phonon-4.11.1/cmake/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/phonon/ff3ed70db4739b3c6747c7f624fe2bad70802987
 pushd clr-build
 %make_install
 popd
@@ -358,6 +361,6 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/phonon/COPYING
-/usr/share/package-licenses/phonon/COPYING.LIB
-/usr/share/package-licenses/phonon/cmake_COPYING-CMAKE-SCRIPTS
+/usr/share/package-licenses/phonon/7c203dee3a03037da436df03c4b25b659c073976
+/usr/share/package-licenses/phonon/9a1929f4700d2407c70b507b3b2aaf6226a9543c
+/usr/share/package-licenses/phonon/ff3ed70db4739b3c6747c7f624fe2bad70802987
