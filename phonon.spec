@@ -6,7 +6,7 @@
 #
 Name     : phonon
 Version  : 4.11.1
-Release  : 10
+Release  : 11
 URL      : https://download.kde.org/stable/phonon/4.11.1/phonon-4.11.1.tar.xz
 Source0  : https://download.kde.org/stable/phonon/4.11.1/phonon-4.11.1.tar.xz
 Source1  : https://download.kde.org/stable/phonon/4.11.1/phonon-4.11.1.tar.xz.sig
@@ -25,7 +25,6 @@ BuildRequires : extra-cmake-modules pkgconfig(glib-2.0)
 BuildRequires : extra-cmake-modules pkgconfig(libpulse)
 BuildRequires : extra-cmake-modules-data
 BuildRequires : mesa-dev
-BuildRequires : phonon-dev
 BuildRequires : pkg-config
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(libpulse)
@@ -95,23 +94,23 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1604707326
+export SOURCE_DATE_EPOCH=1646204132
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 %cmake .. -DPHONON_BUILD_PHONON4QT5=on
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1604707326
+export SOURCE_DATE_EPOCH=1646204132
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/phonon
 cp %{_builddir}/phonon-4.11.1/COPYING %{buildroot}/usr/share/package-licenses/phonon/7c203dee3a03037da436df03c4b25b659c073976
